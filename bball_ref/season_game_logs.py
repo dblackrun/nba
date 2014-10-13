@@ -32,10 +32,10 @@ scrape_obj = scrape_players.Scrape()
 for key in players.keys():
     link = 'http://www.basketball-reference.com' + key
     link =  link.replace( ".html", "/gamelog/2014/" )
-    #try:
-    print "Getting logs for " + players[key] + " ..."
-    player_stats = scrape_obj.scrapeLogs(headers, link, players[key], "pgl_advanced", indices)
-    print "Writing to file..."
-    csvDictWiter(output_path, fieldnames, player_stats)
-    #except:
-        #print "FAIL"
+    try:
+        print "Getting logs for " + players[key] + " ..."
+        player_stats = scrape_obj.scrapeLogs(headers, link, players[key], "pgl_advanced", indices)
+        print "Writing to file..."
+        csvDictWiter(output_path, fieldnames, player_stats)
+    except:
+        print "FAIL"
