@@ -24,7 +24,7 @@ fieldnames = ["player", "season", "team"]
 for column in headers:
     fieldnames.append(column)
 
-with open(output_path, "a") as out_file:
+with open(output_path, "w") as out_file:
     writer = csv.DictWriter(out_file, delimiter=',', fieldnames=fieldnames)
     writer.writeheader()
 

@@ -35,3 +35,25 @@ class Scrape:
                 full_row["player"] = player_link["player"]
                 rows.append(full_row)
         return rows
+
+    def scrapeLogs(self, headers, link, player, table_name, row_indices):
+        rows = []
+        url = link
+        response = self.browser.open(url)
+        soup = BeautifulSoup(response.read())
+
+        advanced_table = soup.find("table", {"id":table_name})
+        for tr in advanced_table.findAll('tr'):
+                if len(tr.findAll('td')) == 23:
+                    full_row = {}
+                    row = tr.findAll('td')
+                    g = str(row[1].contents).replace("[u'", "").replace("']", "")
+                    date = str(row[2].contents).split(">")[1].replace("</a", "")
+                    full_row["G"] = g
+                    full_row["Date"] = date
+                    for i in range(len(row_indices)):
+                        value = str(row[row_indices[i]].contents).replace("[u'", "").replace("']", "")
+                        full_row[headers[i]] = value
+                    full_row["player"] = player
+                    rows.append(full_row)
+        return rows
